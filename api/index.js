@@ -8,6 +8,7 @@ import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import usersRoute from "./routes/users.js";
 import cookieParser from "cookie-parser";
+// import cors from "cros";
 
 const app = express();
 const port = 8800;
@@ -29,8 +30,9 @@ mongoose.connection.on("connected", () => {
 });
 
 //midelware
-app.use(express.json());
+// app.use(cors());
 app.use(cookieParser());
+app.use(express.json());
 
 app.use("/api/auth", authRoute);
 app.use("/api/hotels", hotelsRoute);

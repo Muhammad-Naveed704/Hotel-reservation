@@ -5,13 +5,13 @@ import { createError } from "../utils/error.js";
 
 // create room 
 export const createRoom =async (req,res,next) => {
-    const hotelId = req.params.hotelId;
+    const hotelId = req.params.hotelid;
     const newRoom = new Room(req.body);
     try {
         const savedRoom = await newRoom.save();
         try {
             await Hotel.findByIdAndUpdate(hotelId, {
-                $push: {room : savedRoom._id},
+                $push: {rooms : savedRoom._id},
             });
         } catch (err) {
             next(err)            
@@ -36,13 +36,13 @@ export const updateRoom = async (req,res,next) => {
     }
  }
  export const deleteRoom = async (req,res,next) => {
-    const hotelId = req.params.hotelId;
+    const hotelId = req.params.hotelid;
 
     try {
        await Room.findByIdAndDelete( req.params.id);
        try {
         await Hotel.findByIdAndUpdate(hotelId, {
-            $pull: {room : req.params._id},
+            $pull: {rooms : req.params.id},
         });
     } catch (err) {
         next(err)            
